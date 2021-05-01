@@ -66,4 +66,56 @@ public class MemberRegisterService {
    - MemberDao -> CachedMemberDao로 변경할 때 생성자에 인자로 넘어가는 곳만 수정하면 됨
    - 코드가 한 곳으로 집중
    
+## 5. 객체 조립기
+```
+public class Main {
+    public static void main(String[] args) {
+        MemberDao memberDao = new MemberDao():
+        MemberRegisterService regSvc = new MemberRegisterService(memberDao);
+        ChangePasswordService pwdSvc = new ChangePasswordService();
+        pwdSvc.setMemberDao(memberDao);
+        ... // regSvc와 pwdSvc를 사용하는 코드
+    } 
+}
+```
+   - 여기서 클래스의 객체를 생성하고 의존 대상이 되는 객체를 주입해주는 조립기 클래스를 적용해볼 수 있다.
+
+```
+public class Assembler {
+
+	private MemberDao memberDao;
+	private MemberRegisterService regSvc;
+	private ChangePasswordService pwdSvc;
+
+	public Assembler() {
+		memberDao = new MemberDao();
+		regSvc = new MemberRegisterService(memberDao);
+		pwdSvc = new ChangePasswordService();
+		pwdSvc.setMemberDao(memberDao);
+	}
+}
+```
+   - 이 조립기에 있는 필드를 get 함수를 통해 가져오면 원하는 객체를 사용할 수 있다.
    
+## 6. 스프링의 DI 설정
+#### 6.1 스프링을 이용한 객체 조립과 사용
+   - @Configuration 어노테이션은 스프링 설정 클래스를 의미
+   - 이 어노테이션을 붙여야 스프링 설정 클래스로 사용 가능
+   - @Bean 어노테이션은 메서드가 생성한 객체를 스프링 빈으로 설정
+   - memberDao() 메서드가 생성한 빈 객체는 "memberDao"라는 이름으로 스프링에 등록
+    
+    에러사항
+    1. 빈 설정 메서드에 @Bean을 붙이지 않은 경우
+    2. @Bean 설정 메서드의 이름과 getBean() 메서드에 전달한 이름이 다른 경우
+    
+    이 경우에 NoSuchBeanDefinitionException이 발생
+    
+#### 6.2 생성자를 통한 DI
+   - 장점 : 빈 객체를 생성하는 시점에 모든 의존 객체가 주입된다.
+   - 단점 : 파라미터 개수가 많아질 경우 각 인자와 의존 객체에 대한 관계를 한 눈에 보기 어렵다.
+
+#### 6.3 setter 메서드를 통한 DI
+   - 장점 : 세터 메서드 이름을 통해 어떤 의존 객체가 주입되는 지 알 수 있다.
+   - 단점 : 의존 객체를 전달하지 않은 상태로 빈 객체가 생성될 수 있어 NullPointerException의 위험이 있다.
+
+#### 6.4 기본 데이터 타입 값 설정
