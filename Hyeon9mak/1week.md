@@ -390,3 +390,9 @@ setter 메서드를 통한 주입에 실패할 경우 NullPointerException 이 �
 `final` 로 선언하여 불변을 유지시키는 보너스 이득을 취할 수 있다.
 
 이 때문에 현재 스프링에서는 생성자를 이용한 DI를 권고하고 있다.
+
+<br>
+
+## References
+- [스프링 - 생성자 주입을 사용해야 하는 이유, 필드인젝션이 좋지 않은 이유](https://yaboong.github.io/spring/2019/08/29/why-field-injection-is-bad/)
+- [메이븐 중앙 저장소에 배포하기-1](https://www.sollabs.tech/deploy-to-maven-central-repository-1)
