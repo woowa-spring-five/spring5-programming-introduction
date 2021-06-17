@@ -7,3 +7,4 @@
 * [chap3. 스프링 DI](https://github.com/seovalue/spring5-programming-introduction/blob/seovalue/joanne/chap3.md)
 * [chap4. 의존 자동 주입](https://github.com/seovalue/spring5-programming-introduction/blob/seovalue/joanne/chap4.md)
 * [chap5. 컴포넌트 스캔](https://github.com/seovalue/spring5-programming-introduction/blob/seovalue/joanne/chap5.md)
+* [chap6. 빈 라이프사이클과 범위](https://github.com/seovalue/spring5-programming-introduction/blob/seovalue/joanne/chap6.md)
